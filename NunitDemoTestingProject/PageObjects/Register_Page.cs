@@ -22,6 +22,12 @@ namespace NunitDemoTestingProject.PageObjects
         [FindsBy(How = How.Name, Using = "rad1")]
         IWebElement gender;
 
+        [FindsBy(How = How.XPath, Using = "(//INPUT[@type='radio'])[1]")]
+        IWebElement male;
+
+        [FindsBy(How = How.XPath, Using = "(//INPUT[@type='radio'])[2]")]
+        IWebElement female;
+
         [FindsBy(How = How.Name, Using = "dob")]
         IWebElement dob;
 
@@ -72,9 +78,14 @@ namespace NunitDemoTestingProject.PageObjects
             name.SendKeys(Name);
         }
 
-        public void select_gender()
+        public void select_gender(string Gender)
         {
-            gender.Click();
+            if (Gender == "Male")
+            {
+                male.Click();
+            }
+            else
+                female.Click();
         }
 
         public void set_dob(string DOB)
@@ -134,11 +145,11 @@ namespace NunitDemoTestingProject.PageObjects
         }
 
 
-        public void add_credentials(string Name, string DOB, string Addr, string City, string State, string Pinno, string Telephoneno, string EmailID, string Password)
+        public void add_credentials(string Name, string gender, string DOB, string Addr, string City, string State, string Pinno, string Telephoneno, string EmailID, string Password)
         {
             open_Newcustomer_link();
             set_name(Name);
-            select_gender();
+            select_gender(gender);
             set_dob(DOB);
             set_addr(Addr);
             set_city(City);

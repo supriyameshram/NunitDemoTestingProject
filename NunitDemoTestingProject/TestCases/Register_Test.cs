@@ -17,7 +17,7 @@ namespace NunitDemoTestingProject.TestCases
     {
         IWebDriver driver;
 
-        string register_Query = "select user_name, dob, addr, city, state, pin, mobile_no, email, password from new_registration_data";
+        string register_Query = "select user_name, dob, addr, city, state, pin, mobile_no, email, password, gender from new_registration_data";
 
         string login_Query = "select user_name, password from valid_login_data";
 
@@ -46,22 +46,9 @@ namespace NunitDemoTestingProject.TestCases
 
             }
 
-            register_Page.open_Newcustomer_link();
-
             var register_data = db.Execute_register_query(register_Query);
-          
-                register_Page.set_name(register_data[0]);
-                register_Page.set_dob(register_data[1]);
-                register_Page.set_addr(register_data[2]);
-                register_Page.set_city(register_data[3]);
-                register_Page.set_state(register_data[4]);
-                register_Page.set_pinno(register_data[5]);
-                register_Page.set_telephoneno(register_data[6]);
-                register_Page.set_emailid(register_data[7]);
-                register_Page.set_password(register_data[8]);
 
-
-            register_Page.click_submit();
+            register_Page.add_credentials(register_data["Name"], register_data["Gender"], register_data["DOB"], register_data["Addr"], register_data["City"], register_data["State"], register_data["Pinno"], register_data["Telephoneno"], register_data["EmailID"], register_data["Password"]);
 
             int cust_id = register_Page.get_id();
             string insert_Query = "insert into add_newaccount(cust_id, initial_deposit) " + "Values('"+ cust_id + "', '" + 10000 +"')";
